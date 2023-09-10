@@ -17,9 +17,29 @@ let conditions = [
 // Function to handle player moves
 const ticTacToe = (element, index) => {
     // Your game logic here
+    if(cells[index]!==""||result.textContent!==""){
+        return;
+    }
+cells[index]=currentPlayer;
+element.textContent=currentPlayer;
+
+for(const condition of conditions){
+    const[a,b,c]=condition;
+    if(cells[a]&&cells[a]===cells[b]&&cells[a]===cells[c]){
+        result.textContent=${currentPlayer} wins!;
+        btns.foreach((btn)=>btn.disabled=true);
+        return;
+    }
+}
+if(!cells.includes("")){
+    result.textContent=It\'s a draw!;
+    return;
+}
+currentPlayer=currentPlayer==='X'?'O':'X';
+result.textContent=Current Player:${currentPlayer};
 
     /*
-    **Part 1: Winning Conditions (Add your code here)**
+    Part 1: Winning Conditions (Add your code here)
 
     1. Implement the logic to check for winning conditions using the 'conditions' array.
     2. Display a winning message in the 'result' element when a player wins.
@@ -37,7 +57,7 @@ const ticTacToe = (element, index) => {
 };
 
     /*
-    **Part 2: Reset Function (Add your code here)**
+    Part 2: Reset Function (Add your code here)
 
     1. Implement a new function that resets the game to its initial state.
     2. Ensure the 'cells', 'btns', and 'currentPlayer' variables are reset.
@@ -55,6 +75,14 @@ const resetGame = () => {
 
     // Your code to re-enable buttons
     // ...
+
+    cells = ['', '', '', '', '', '', '', '', ''];
+    currentPlayer='X';
+    result.textContent='';
+    btns.forEach((btn)=>{
+        btn.textContent='';
+        btn.disabled=false;
+    });
 };
 
 btns.forEach((btn, i) => {
